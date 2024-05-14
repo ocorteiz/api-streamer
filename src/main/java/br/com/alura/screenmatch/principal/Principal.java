@@ -37,6 +37,7 @@ public class Principal {
                     5 - Listar Série Buscadas Por Ator e Avaliacao
                     6 - Listar Série Buscada Top 5
                     7 - Listar Série Buscadas Por Genero
+                    8 - Filtrar Séries
                                     
                     0 - Sair
                     """;
@@ -67,6 +68,9 @@ public class Principal {
                     break;
                 case 7:
                     listarSeriesBuscadasPorGenero();
+                    break;
+                case 8:
+                    filtrarSeries();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -137,7 +141,6 @@ public class Principal {
             System.out.println("Serie não encontrada");
         }
 
-
     }
 
     private void listarSeriesBuscadas(){
@@ -146,7 +149,6 @@ public class Principal {
         serieList.stream()
                 .sorted(Comparator.comparing(Serie::getGenero))
                 .forEach(System.out::println);
-
     }
 
     private void listarSeriesBuscadasPorTitulo() {
@@ -182,6 +184,7 @@ public class Principal {
 
     private void listarSeriesBuscadasTop5() {
         List<Serie> seriesTop5 = serieRepository.findTop5ByOrderByAvaliacaoDesc();
+        System.out.println("Top 5 Séries: \n");
         seriesTop5
                 .forEach(s -> System.out.println(s.getTitulo() + " - " + s.getAvaliacao()));
     }
@@ -193,11 +196,31 @@ public class Principal {
 
         Optional<Serie> serieEncontrada = serieRepository.findByGenero(categoria);
         if (serieEncontrada.isPresent()) {
+            System.out.println("Série encontrada: \n");
             serieEncontrada.stream()
                     .forEach(s -> System.out.println(s.getTitulo() + " - " + s.getAvaliacao()));
         } else {
             System.out.println("Não existe séries desse genero");
         }
+    }
+
+    private void filtrarSeries() {
+        System.out.println("Digite o numero de temporadas: ");
+        var temporadas = leitura.nextInt();
+        leitura.nextLine();
+        System.out.println("Digite a avaliação minima");
+        var avaliacao = leitura.nextDouble();
+        leitura.nextLine();
+
+        Optional<Serie> serieOptional = serieRepository.findByTotalTemporadasLessThanEqualAndAvaliacaoGreaterThanEqual(temporadas, avaliacao);
+        if (serieOptional.isPresent()) {
+            System.out.println("Série encontrada: \n");
+            serieOptional.stream()
+                    .forEach(s -> System.out.println(s.getTitulo() + " - " + s.getAvaliacao()));
+        } else {
+            System.out.println("Série não encontrada!");
+        }
+
     }
 
 }
