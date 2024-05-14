@@ -1,9 +1,6 @@
 package br.com.alura.screenmatch.principal;
 
-import br.com.alura.screenmatch.model.DadosSerie;
-import br.com.alura.screenmatch.model.DadosTemporada;
-import br.com.alura.screenmatch.model.Episodio;
-import br.com.alura.screenmatch.model.Serie;
+import br.com.alura.screenmatch.model.*;
 import br.com.alura.screenmatch.repository.SerieRepository;
 import br.com.alura.screenmatch.service.ConsumoApi;
 import br.com.alura.screenmatch.service.ConverteDados;
@@ -35,8 +32,11 @@ public class Principal {
             var menu = """
                     1 - Buscar Séries Na Web
                     2 - Buscar Episódios de Serie Na Web
-                    3 - Listar Todas as Séries
-                    4 - Buscar Série Por titulo
+                    3 - Listar Todas as Séries Buscadas
+                    4 - Listar Série Buscadas Por titulo
+                    5 - Listar Série Buscadas Por Ator e Avaliacao
+                    6 - Listar Série Buscada Top 5
+                    7 - Listar Série Buscadas Por Genero
                                     
                     0 - Sair
                     """;
@@ -51,13 +51,22 @@ public class Principal {
                     buscarSerieWeb();
                     break;
                 case 2:
-                    buscarEpisodioPorSerie();
+                    buscarEpisodioPorSerieNaWeb();
                     break;
                 case 3:
                     listarSeriesBuscadas();
                     break;
                 case 4:
-                    listarSeriePorTitulo();
+                    listarSeriesBuscadasPorTitulo();
+                    break;
+                case 5:
+                    listarSeriesBuscadasPorAtor();
+                    break;
+                case 6:
+                    listarSeriesBuscadasTop5();
+                    break;
+                case 7:
+                    listarSeriesBuscadasPorGenero();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -96,7 +105,7 @@ public class Principal {
         return dados;
     }
 
-    private void buscarEpisodioPorSerie(){
+    private void buscarEpisodioPorSerieNaWeb(){
         listarSeriesBuscadas();
         System.out.println("Escolha uma série acima para buscar ep's na web: ");
         var nomeSerie = leitura.nextLine();
@@ -140,7 +149,7 @@ public class Principal {
 
     }
 
-    private void listarSeriePorTitulo() {
+    private void listarSeriesBuscadasPorTitulo() {
         System.out.println("Digite o titulo da série: ");
         var nomeSerie = leitura.nextLine();
 
@@ -152,4 +161,43 @@ public class Principal {
             System.out.println("Serie não encontrada!");
         }
     }
+
+    private void listarSeriesBuscadasPorAtor() {
+        System.out.println("Digite o nome do ator: ");
+        var nomeAtor = leitura.nextLine();
+
+        System.out.println("Digite o o valor da avaliação: ");
+        var avaliacao = leitura.nextDouble();
+
+        Optional<Serie> serieEncontraca = serieRepository.findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(nomeAtor, avaliacao);
+
+        if (serieEncontraca.isPresent()) {
+            System.out.println("Séries em que " + nomeAtor + " trabalhou com avaliação maior que " + avaliacao);
+            serieEncontraca.stream()
+                    .forEach(s -> System.out.println(s.getTitulo() + " - " + s.getAvaliacao()));
+        } else {
+            System.out.println("Séries não encontrada");
+        }
+    }
+
+    private void listarSeriesBuscadasTop5() {
+        List<Serie> seriesTop5 = serieRepository.findTop5ByOrderByAvaliacaoDesc();
+        seriesTop5
+                .forEach(s -> System.out.println(s.getTitulo() + " - " + s.getAvaliacao()));
+    }
+
+    private void listarSeriesBuscadasPorGenero() {
+        System.out.println("Digite o Gênero/Categoria: ");
+        var nomeGenero = leitura.nextLine();
+        Categoria categoria = Categoria.fromPortuguese(nomeGenero);
+
+        Optional<Serie> serieEncontrada = serieRepository.findByGenero(categoria);
+        if (serieEncontrada.isPresent()) {
+            serieEncontrada.stream()
+                    .forEach(s -> System.out.println(s.getTitulo() + " - " + s.getAvaliacao()));
+        } else {
+            System.out.println("Não existe séries desse genero");
+        }
+    }
+
 }
