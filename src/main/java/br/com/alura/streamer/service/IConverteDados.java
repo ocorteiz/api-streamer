@@ -1,4 +1,4 @@
-package br.com.alura.screenmatch.service;
+package br.com.alura.streamer.service;
 
 public interface IConverteDados {
     <T> T  obterDados(String json, Class<T> classe);

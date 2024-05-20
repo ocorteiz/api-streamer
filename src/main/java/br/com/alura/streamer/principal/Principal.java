@@ -1,9 +1,9 @@
-package br.com.alura.screenmatch.principal;
+package br.com.alura.streamer.principal;
 
-import br.com.alura.screenmatch.model.*;
-import br.com.alura.screenmatch.repository.SerieRepository;
-import br.com.alura.screenmatch.service.ConsumoApi;
-import br.com.alura.screenmatch.service.ConverteDados;
+import br.com.alura.streamer.model.*;
+import br.com.alura.streamer.repository.SerieRepository;
+import br.com.alura.streamer.service.ConsumoApi;
+import br.com.alura.streamer.service.ConverteDados;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 

@@ -1,7 +1,7 @@
-package br.com.alura.screenmatch;
+package br.com.alura.streamer;
 
-import br.com.alura.screenmatch.principal.Principal;
-import br.com.alura.screenmatch.repository.SerieRepository;
+import br.com.alura.streamer.principal.Principal;
+import br.com.alura.streamer.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
