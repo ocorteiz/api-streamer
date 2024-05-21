@@ -1,4 +1,4 @@
-package br.com.alura.streamer.service;
+package br.com.alura.streamer.convert;
 
 import java.io.IOException;
 import java.net.URI;
