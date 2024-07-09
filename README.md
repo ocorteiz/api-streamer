@@ -1,14 +1,26 @@
-# Java: persistência de dados e consultas com Spring Data JPA
+## 💻 Sobre o projeto
 
-Projeto desenvolvido no segundo curso da formação Avançando com Java da Alura
+Streamer é uma API REST de buscar informações de series na web usando a API OMDB.
 
+---
 
-## 🔨 Objetivos do projeto
+## ⚙️ Funcionalidades
 
-- Evoluir no projeto Screenmatch, iniciado no primeiro curso da formação, criando um menu com várias opções;
-- Modelar as abstrações da aplicação através de classes, enums, atributos e métodos;
-- Consumir a API do ChatGPT;
-- Utilizar o Spring Data JPA para persistir dados no banco;
-- Conhecer vários tipos de banco de dados e utilizar o PostgreSQL;
-- Trabalhar com vários tipos de consultas ao banco de dados;
-- Aprofundar na interface JPARepository
+- [x] Buscar serie na web
+- [x] Listar informações da serie (temporadas, top episodios etc.)
+
+---
+
+## 🛠 Tecnologias
+
+As seguintes tecnologias foram utilizadas no desenvolvimento da API Rest do projeto:
+
+- **[Java 21](https://www.oracle.com/java)**
+- **[Spring Boot 3](https://spring.io/projects/spring-boot)**
+- **[Maven](https://maven.apache.org)**
+- **[Postgresql]()**
+- **[GSON]()**
+- **[API OMDB]()**
+- **[Jackson Databind]()**
+
+---
